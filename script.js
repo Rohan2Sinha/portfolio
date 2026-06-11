@@ -67,4 +67,11 @@ function showSlide() {
   index = (index + 1) % slides.length;
 }
 
+const menuToggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
 setInterval(showSlide, 2500); // change every 2.5 sec
