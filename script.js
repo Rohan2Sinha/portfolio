@@ -1,39 +1,55 @@
-// FADE-IN ANIMATION
+const fadeElements = document.querySelectorAll(".fade-in");
 
-const fadeElements = document.querySelectorAll('.fade-in');
+const fadeObserver = new IntersectionObserver(
+  (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  {
+    threshold: 0.2,
+  }
+);
 
-const fadeObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-      observer.unobserve(entry.target); // stop observing after animation
-    }
+fadeElements.forEach((el) => fadeObserver.observe(el));
+
+const menuToggle = document.getElementById("menu-toggle");
+const navMenu = document.getElementById("nav-links");
+
+if (menuToggle && navMenu) {
+  menuToggle.addEventListener("click", () => {
+    navMenu.classList.toggle("active");
   });
-}, {
-  threshold: 0.2
-});
 
-fadeElements.forEach(el => fadeObserver.observe(el));
-
-
-// ACTIVE NAVBAR LINK
+  document.querySelectorAll(".nav-links a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navMenu.classList.remove("active");
+    });
+  });
+}
 
 const sections = document.querySelectorAll("section[id]");
-const navLinks = document.querySelectorAll(".nav-links a");
+const navItems = document.querySelectorAll(".nav-links a");
 
 function setActiveLink() {
   let currentSection = "";
 
-  sections.forEach(section => {
+  sections.forEach((section) => {
     const sectionTop = section.offsetTop - 120;
     const sectionHeight = section.offsetHeight;
 
-    if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-      currentSection = section.getAttribute("id");
+    if (
+      window.scrollY >= sectionTop &&
+      window.scrollY < sectionTop + sectionHeight
+    ) {
+      currentSection = section.id;
     }
   });
 
-  navLinks.forEach(link => {
+  navItems.forEach((link) => {
     link.classList.remove("active");
 
     if (link.getAttribute("href") === `#${currentSection}`) {
@@ -42,36 +58,21 @@ function setActiveLink() {
   });
 }
 
-// Throttle scroll (performance boost)
-let ticking = false;
-
-window.addEventListener("scroll", () => {
-  if (!ticking) {
-    window.requestAnimationFrame(() => {
-      setActiveLink();
-      ticking = false;
-    });
-    ticking = true;
-  }
-});
+window.addEventListener("scroll", setActiveLink);
+window.addEventListener("load", setActiveLink);
 
 const slides = document.querySelectorAll(".slide");
-let index = 0;
 
-function showSlide() {
-  slides.forEach((slide, i) => {
-    slide.classList.remove("active");
-  });
+if (slides.length > 0) {
+  let currentSlide = 0;
 
-  slides[index].classList.add("active");
-  index = (index + 1) % slides.length;
+  function showSlide() {
+    slides.forEach((slide) => slide.classList.remove("active"));
+
+    slides[currentSlide].classList.add("active");
+    currentSlide = (currentSlide + 1) % slides.length;
+  }
+
+  showSlide();
+  setInterval(showSlide, 3000);
 }
-
-const menuToggle = document.getElementById("menu-toggle");
-const navLinks = document.getElementById("nav-links");
-
-menuToggle.addEventListener("click", () => {
-  navLinks.classList.toggle("active");
-});
-
-setInterval(showSlide, 2500); // change every 2.5 sec
