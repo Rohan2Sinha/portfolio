@@ -5,6 +5,11 @@
   font-family: "Inter", sans-serif;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -154,10 +159,12 @@ body {
   color: #58a6ff;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 768px) {
+
   .education-wrapper {
     flex-direction: column;
-    gap: 40px;
+    gap: 30px;
+    text-align: center;
   }
 
   .education-left,
@@ -165,20 +172,24 @@ body {
     width: 100%;
   }
 
-  .slider {
+  .education-card {
     max-width: 100%;
   }
-}
 
-@media (max-width: 768px) {
-  .education-wrapper {
-    flex-direction: column;
-    text-align: center;
+  .slider {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
   }
 
-   .slider {
+  .slide img {
     width: 100%;
-    max-width: 420px;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .slide p {
+    font-size: 16px;
   }
 }
 
@@ -194,10 +205,6 @@ body {
   z-index: 1000;
 }
 
-.nav-links {
-  position: absolute;
-  z-index: 1001;
-}
 
 .nav-container {
   display: flex;
@@ -496,36 +503,48 @@ h2 {
 
 @media (max-width: 768px) {
   .contact-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 2fr;
+    gap: 16px;
   }
 }
 
 
 @media (max-width: 768px) {
 
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
   .hero-container {
     flex-direction: column;
     text-align: center;
-  }
-
-  .hero {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .hero h1 {
-    font-size: 3rem;
-    line-height: 1.1;
+    gap: 30px;
   }
 
   .hero-right {
     order: -1;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
   }
 
-  .hero-image {
-    width: 220px;
-    height: 220px;
+  .hero-left,
+  .hero-right {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero h1 {
+    font-size: 2.6rem;
+    line-height: 1.15;
+    word-break: break-word;
+  }
+
+  .desc {
+    max-width: 100%;
+  }
+
+  .cta {
+    justify-content: center;
   }
 
   section {
@@ -578,11 +597,6 @@ h2 {
   color: #58a6ff;
 }
 
-@media (max-width: 900px) {
-  .contact-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 
 .footer {
   border-top: 1px solid #1f2937;
@@ -655,20 +669,12 @@ h2 {
 
 @media (max-width: 768px) {
 
-  .navbar {
-    padding: 18px 20px;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
   .nav-links {
     position: absolute;
     top: 75px;
     right: 20px;
 
-    display: none !important;
+    display: none;
     flex-direction: column;
     gap: 15px;
 
@@ -678,13 +684,11 @@ h2 {
     padding: 20px;
     border-radius: 12px;
     border: 1px solid #30363d;
+
+    z-index: 1001;
   }
 
   .nav-links.active {
-    display: flex !important;
-  }
-
-  .logo {
-    font-size: 28px;
+    display: flex;
   }
 }
